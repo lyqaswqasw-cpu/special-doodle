@@ -1,0 +1,123 @@
+{
+  "rules": {
+    ".read": true,
+
+    "v4_app_config": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_channels": {
+      ".read": true,
+      "$channelId": {
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['name']) && !newData.child('name').val().contains('كحبة') && !newData.child('name').val().contains('قحبة') && !newData.child('name').val().contains('علاوي') && !newData.child('name').val().contains('125') && !newData.child('name').val().contains('طيز') && !newData.child('name').val().contains('منيوك') && !newData.child('name').val().contains('شرموط')"
+      }
+    },
+
+    "v4_channel_categories": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_channel_branches": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_xtreme_accounts": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_event_banners": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_events": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "v4_foul_tv": {
+      "videos": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "comments": {
+        ".read": true,
+        ".write": true
+      },
+      "config": {
+        ".read": true,
+        ".write": "auth != null"
+      }
+    },
+
+    "channels": {
+      ".read": true,
+      ".write": false
+    },
+
+    "app_config": {
+      ".read": true,
+      ".write": false
+    },
+
+    "channel_categories": {
+      ".read": true,
+      ".write": false
+    },
+
+    "channel_branches": {
+      ".read": true,
+      ".write": false
+    },
+
+    "xtreme_accounts": {
+      ".read": true,
+      ".write": false
+    },
+
+    "event_banners": {
+      ".read": true,
+      ".write": false
+    },
+
+    "events": {
+      ".read": true,
+      ".write": false
+    },
+
+    "foul_tv": {
+      ".read": true,
+      ".write": false
+    },
+
+    "channel_chat_messages": {
+      ".read": true,
+      ".write": true
+    },
+
+    "chat_messages": {
+      ".read": true,
+      ".write": true
+    },
+
+    "chat_users": {
+      ".read": true,
+      ".write": true
+    },
+
+    "channel_presence": {
+      ".read": true,
+      ".write": true
+    },
+
+    "global_app_presence": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

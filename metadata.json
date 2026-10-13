@@ -1,0 +1,8 @@
+{
+  "name": "Foul",
+  "description": "تطبيق FOUL لمتابعة مباريات كرة القدم وبث القنوات المباشر وإصدار المطور",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

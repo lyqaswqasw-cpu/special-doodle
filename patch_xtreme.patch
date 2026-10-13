@@ -1,0 +1,53 @@
+--- app/src/main/java/com/example/data/xtreme/XtremeApiClient.kt
++++ app/src/main/java/com/example/data/xtreme/XtremeApiClient.kt
+@@ -118,7 +118,7 @@
+                                 val streamId = ep.optString("id").ifBlank { ep.optString("stream_id") }
+                                 val title = ep.optString("title", "Episode ${i+1}")
+                                 val epNum = ep.optInt("episode_num", i + 1)
+-                                val icon = ep.optString("info.movie_image", "")
++                                val icon = fixIconUrl(ep.optString("info.movie_image", ""))
+                                 val ext = ep.optString("container_extension", "mp4").ifBlank { "mp4" }
+                                 
+                                 epList.add(
+@@ -155,6 +155,14 @@
+         return@withContext null
+     }
+ 
++    private fun fixIconUrl(url: String?): String {
++        if (url.isNullOrBlank()) return ""
++        var fixedUrl = url.replace("\\/", "/")
++        if (fixedUrl.startsWith("//")) fixedUrl = "http:$fixedUrl"
++        else if (fixedUrl.startsWith("/")) fixedUrl = "http://$fixedUrl"
++        return fixedUrl.trim()
++    }
++
+     private fun executeGetRequest(url: String): String? {
+         return try {
+             val request = Request.Builder()
+@@ -176,7 +184,7 @@
+             val obj = array.optJSONObject(i) ?: continue
+             val streamId = obj.optString("stream_id").ifBlank { obj.optInt("stream_id").toString() }
+             val name = obj.optString("name", "قناة مباشرة")
+-            val icon = obj.optString("stream_icon", "")
++            val icon = fixIconUrl(obj.optString("stream_icon", ""))
+             val catId = obj.optString("category_id", "")
+             val streamUrl = "$host/live/$u/$p/$streamId.m3u8"
+             output.add(
+@@ -201,7 +209,7 @@
+             val obj = array.optJSONObject(i) ?: continue
+             val streamId = obj.optString("stream_id").ifBlank { obj.optInt("stream_id").toString() }
+             val name = obj.optString("name", "فيلم")
+-            val icon = obj.optString("stream_icon", "")
++            val icon = fixIconUrl(obj.optString("stream_icon", ""))
+             val catId = obj.optString("category_id", "")
+             val ext = obj.optString("container_extension", "mp4").ifBlank { "mp4" }
+             val streamUrl = "$host/movie/$u/$p/$streamId.$ext"
+@@ -227,7 +235,7 @@
+             val obj = array.optJSONObject(i) ?: continue
+             val seriesId = obj.optString("series_id").ifBlank { obj.optInt("series_id").toString() }
+             val name = obj.optString("name", "مسلسل")
+-            val icon = obj.optString("cover", "")
++            val icon = fixIconUrl(obj.optString("cover", ""))
+             val catId = obj.optString("category_id", "")
+             val streamUrl = "$host/series/$u/$p/$seriesId.mp4"
+             output.add(
